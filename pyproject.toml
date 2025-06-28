@@ -1,0 +1,25 @@
+# pyproject.toml
+[project]
+name = "transformations_2d"
+version = "0.1.0"
+authors = [
+  { name="Mainak Debnath", email="mainak7debnath@gmail.com" },
+]
+description = "A Python package for 2D geometric transformations (translation, scaling, rotation, shearing, reflection)."
+readme = "README.md"
+requires-python = ">=3.8"
+license = {text = "MIT"}
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+keywords = ["2d", "geometry", "transformations", "translation", "scaling", "rotation", "shearing", "reflection"]
+
+[project.urls]
+Homepage = "https://github.com/mainak-debnath/transformations_2d"
+"Bug Tracker" = "https://github.com/mainak-debnath/transformations_2d/issues"
+
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
