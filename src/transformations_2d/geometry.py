@@ -43,12 +43,11 @@ class Point:
         """
         if not isinstance(other, Point):
             return NotImplemented
-        # Fix: Increase absolute tolerance slightly for more robust comparison with floating point results
         return math.isclose(self.x, other.x, abs_tol=1e-7) and math.isclose(
             self.y, other.y, abs_tol=1e-7
         )
 
-    # --- Basic Vector Operations (Optional, but good for completeness) ---
+    # --- Basic Vector Operations ---
     def __add__(self, other: "Point") -> "Point":
         """Performs vector addition (self + other)."""
         if not isinstance(other, Point):

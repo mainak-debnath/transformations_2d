@@ -49,7 +49,7 @@ desktop.ini
 
 # Pytest cache
 .pytest_cache/
-
+.idea
 # Any other specific data files you might create locally that shouldn't be tracked
 # /data/
 # /outputs/
