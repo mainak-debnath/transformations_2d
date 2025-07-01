@@ -5,7 +5,7 @@ version = "0.2.0"
 authors = [
   { name="Mainak Debnath", email="mainak7debnath@gmail.com" },
 ]
-description = "A Python package for 2D geometric transformations (translation, scaling, rotation, shearing, reflection)."
+description = "A lightweight and intuitive Python package for applying 2D geometric transformations—such as translation, scaling, rotation, shearing, and reflection—to points and polygons. Ideal for graphics, simulations, and educational use."
 readme = "README.md"
 requires-python = ">=3.8"
 license = {text = "MIT"}
