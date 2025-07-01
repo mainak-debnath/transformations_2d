@@ -36,6 +36,19 @@ class Point:
         """
         return f"Point(x={self.x:.2f}, y={self.y:.2f})"
 
+    def __str__(self) -> str:
+        """Readable string representation like '(x, y)'"""
+        return f"({self.x:.2f}, {self.y:.2f})"
+
+    def to_dict(self) -> dict:
+        """Export Point to a dictionary."""
+        return {"x": self.x, "y": self.y}
+
+    @classmethod
+    def from_dict(cls, data: dict) -> "Point":
+        """Create Point from a dictionary."""
+        return cls(data["x"], data["y"])
+
     def __eq__(self, other: object) -> bool:
         """
         Compares two Point objects for equality using a tolerance for floating-point numbers.
@@ -262,6 +275,28 @@ class Polygon:
         """
         points_repr = ", ".join(str(p) for p in self._points)
         return f"Polygon([{points_repr}])"
+
+    def __str__(self) -> str:
+        """Readable string representation like a list of points."""
+        return "[" + ", ".join(str(p) for p in self._points) + "]"
+
+    def __len__(self) -> int:
+        """Returns the number of vertices."""
+        return len(self._points)
+
+    def __getitem__(self, index: int) -> Point:
+        """Allows indexing into the polygon."""
+        return self._points[index]
+
+    def to_dict(self) -> dict:
+        """Export Polygon as a list of dicts."""
+        return {"points": [p.to_dict() for p in self._points]}
+
+    @classmethod
+    def from_dict(cls, data: dict) -> "Polygon":
+        """Create Polygon from a list of dicts."""
+        points = [Point.from_dict(p_dict) for p_dict in data["points"]]
+        return cls(points)
 
     def __eq__(self, other: object) -> bool:
         """
