@@ -38,8 +38,7 @@ The package provides Point and Polygon classes, each with methods for various 2D
 
 ### Point Transformations
 
-```
-
+```python
 from transformations_2d.geometry import Point
 
 # --- Create a point ---
@@ -117,8 +116,7 @@ print(f"Reflected across y = x: {reflected_xy}")
 
 ### Polygon Transformations
 
-```
-
+```python
 from transformations_2d.geometry import Point, Polygon
 
 # --- Create a triangle using 3 points ---
