@@ -1,5 +1,6 @@
 # tests/test_geometry.py
 import pytest
+
 from transformations_2d.geometry import Point, Polygon
 
 
@@ -246,3 +247,106 @@ def test_polygon_non_point_elements():
         TypeError, match="All elements in 'points' must be instances of Point."
     ):
         Polygon([Point(0, 0), (1, 1)])
+
+
+def test_point_str():
+    p = Point(3.14159, 2.71828)
+    assert str(p) == "(3.14, 2.72)"
+
+
+def test_point_to_from_dict():
+    p = Point(5, 10)
+    d = p.to_dict()
+    assert d == {"x": 5.0, "y": 10.0}
+    p2 = Point.from_dict(d)
+    assert p == p2
+
+
+def test_polygon_str():
+    poly = Polygon([Point(0, 0), Point(1, 1)])
+    assert str(poly) == "[(0.00, 0.00), (1.00, 1.00)]"
+
+
+def test_polygon_len_and_getitem():
+    p1, p2, p3 = Point(0, 0), Point(1, 0), Point(0, 1)
+    poly = Polygon([p1, p2, p3])
+    assert len(poly) == 3
+    assert poly[0] == p1
+    assert poly[1] == p2
+    with pytest.raises(IndexError):
+        _ = poly[10]
+
+
+def test_polygon_to_from_dict():
+    poly = Polygon([Point(0, 0), Point(1, 1)])
+    d = poly.to_dict()
+    expected_dict = {"points": [{"x": 0.0, "y": 0.0}, {"x": 1.0, "y": 1.0}]}
+    assert d == expected_dict
+
+    poly2 = Polygon.from_dict(d)
+    assert poly == poly2
+
+
+# Edge cases
+
+
+def test_point_scale_zero_factor():
+    p = Point(3, 4)
+    scaled = p.scale(0, 0)
+    assert scaled == Point(0, 0)
+
+
+def test_point_rotate_zero_degrees():
+    p = Point(3, 4)
+    rotated = p.rotate(0)
+    assert rotated == p
+
+
+def test_point_translate_zero():
+    p = Point(3, 4)
+    translated = p.translate(0, 0)
+    assert translated == p
+
+
+def test_polygon_with_one_point():
+    p = Point(1, 1)
+    poly = Polygon([p])
+    assert len(poly) == 1
+    assert poly.points[0] == p
+
+
+def test_polygon_invalid_init_type():
+    with pytest.raises(TypeError):
+        Polygon([Point(0, 0), "not a point"])
+
+
+def test_polygon_empty_points_list_exception():
+    with pytest.raises(ValueError):
+        Polygon([])
+
+
+def test_polygon_immutable_points_list():
+    p1 = Point(0, 0)
+    poly = Polygon([p1])
+    points_copy = poly.points
+    points_copy.append(Point(1, 1))
+    assert len(poly.points) == 1  # original polygon unaffected
+
+
+# Additional tests for Polygon transformations with origin parameter
+
+
+def test_polygon_scale_with_origin():
+    origin = Point(1, 1)
+    poly = Polygon([Point(2, 2), Point(3, 3)])
+    scaled_poly = poly.scale(2, 2, origin=origin)
+    expected_poly = Polygon([Point(3, 3), Point(5, 5)])  # (2-1)*2+1=3, (3-1)*2+1=5
+    assert scaled_poly == expected_poly
+
+
+def test_polygon_rotate_with_origin():
+    origin = Point(1, 1)
+    poly = Polygon([Point(2, 1)])
+    rotated_poly = poly.rotate(90, origin=origin)
+    expected_poly = Polygon([Point(1, 2)])  # rotated 90 CCW about (1,1)
+    assert rotated_poly == expected_poly
